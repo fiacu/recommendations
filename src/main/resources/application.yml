@@ -1,0 +1,16 @@
+spring.datasource.hikari:
+  connectionTimeout: 20000
+  maximumPoolSize: 5
+  poolName: HikariPoolZZZ
+spring.jpa:
+  show-sql: true
+  properties.hibernate.format_sql: true
+
+server:
+  servlet:
+    context-path: /bz-recommendation/v1
+
+springdoc.swagger-ui.disable-swagger-default-url: true
+
+management.endpoints.web.exposure.include: '*'
+
