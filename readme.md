@@ -32,14 +32,7 @@ PUT /bz-marketdata/v1/recommendations/name
     "instrumentIds": [
         {"securityId": "AL29-0003-C-CT-ARS", "ordenamiento": 1}, 
         {"securityId": "GD35-0003-C-CT-ARS", "ordenamiento": 2},
-        {"securityId": "AF20-0003-C-CT-ARS", "ordenamiento": 3}, 
-        {"securityId": "AO20-0003-C-CT-ARS", "ordenamiento": 4}, 
-        {"securityId": "TX24-0003-C-CT-ARS", "ordenamiento": 5}, 
-        {"securityId": "TX23-0003-C-CT-ARS", "ordenamiento": 6}, 
-        {"securityId": "TX26-0003-C-CT-ARS", "ordenamiento": 7}, 
-        {"securityId": "PBA25-0003-C-CT-ARS", "ordenamiento": 8}, 
-        {"securityId": "DICP-0003-C-CT-ARS", "ordenamiento": 9}, 
-        {"securityId": "AE38-0003-C-CT-ARS", "ordenamiento": 10}
+        {"securityId": "AF20-0003-C-CT-ARS", "ordenamiento": 3}
     ]
 }
 ```

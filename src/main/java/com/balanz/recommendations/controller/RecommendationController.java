@@ -39,12 +39,41 @@ public class RecommendationController implements RecommendationApi {
     }
 
     @Override
+    public ResponseEntity<Recommendation> getRecommendation(String recommendationId) {
+        return new ResponseEntity<>(service.getRecommendationById(recommendationId), HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<Void> updateRecommendation(String recommendationId,
+            @Valid RecommendationEntry recommendation) {
+        service.getRecommendationById(recommendationId);
+        service.saveRecommendation(ApiMapper.mapRecomendation(recommendation));
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+    
+    @Override
+    public ResponseEntity<Void> deleteRecommendation(String recommendationId) {
+        service.deleteRecommendation(recommendationId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @Override
     public ResponseEntity<Recommendation> getRecommendationByName(final String name) {
         final Optional<Recommendation> recommendation = service.getRecommendationByName(name);
         if(recommendation.isEmpty()) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         return new ResponseEntity<>(recommendation.get(), HttpStatus.OK);
     }
     
+    @Override
+    public ResponseEntity<Void>  updateRecommendationByName(String name,
+            @Valid RecommendationEntry recommendation) {
+        final Optional<Recommendation> dbRecommendation = service.getRecommendationByName(name);
+        if(dbRecommendation.isEmpty())
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        service.saveRecommendation(ApiMapper.mapRecomendation(recommendation));
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public Map<String, String> handleValidationExceptions(MethodArgumentNotValidException ex) {
@@ -57,13 +86,4 @@ public class RecommendationController implements RecommendationApi {
         return errors;
     }
 
-    @Override
-    public ResponseEntity<Void>  updateRecommendationByName(String name,
-            @Valid RecommendationEntry recommendation) {
-        final Optional<Recommendation> dbRecommendation = service.getRecommendationByName(name);
-        if(dbRecommendation.isEmpty())
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        service.saveRecommendation(ApiMapper.mapRecomendation(recommendation));
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
 }

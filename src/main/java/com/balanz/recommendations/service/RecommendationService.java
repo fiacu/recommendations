@@ -7,7 +7,6 @@ import java.util.Optional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,12 +27,12 @@ public class RecommendationService {
     private RecommendationRepository repo;
 
     public Optional<Recommendation> getRecommendationByName(String name) {
-        log.info("Find by name {}", name);
+        log.debug("Find by name {}", name);
         return repo.findByName(name);
     }
 
     public void saveRecommendation(Recommendation rec) {
-        log.info("Save: {}", rec.getName());
+        log.debug("Save: {}", rec.getName());
         repo.save(rec);
     }
 
@@ -43,7 +42,7 @@ public class RecommendationService {
             repo.findAll().forEach(recommendations::add);
         }
         else {
-            log.info("Find like name: {}", name);
+            log.debug("Find like name: {}", name);
             repo.findByNameContains(name).forEach(recommendations::add);
         }
         return recommendations;
@@ -51,26 +50,28 @@ public class RecommendationService {
 
     @Transactional
     public void updateRecommendation(Recommendation oldRec, Recommendation newRec) {
-        /*log.info("Delete: {}", oldRec.getName());
+        /*log.debug("Delete: {}", oldRec.getName());
         Query q = em.createNativeQuery("DELETE FROM RecommendationInstrument ri WHERE ri.id = ?");
         q.setParameter(1, oldRec.getId());
         q.executeUpdate();
         */
-        log.info("Update: {}", oldRec.getName());
+        log.debug("Update: {}", oldRec.getName());
         oldRec.setUpdate(new Date());
         //oldRec.setInstruments(newRec.getInstruments());
         //oldRec.setPersons(newRec.getPersons());
         repo.save(oldRec);
     }
 
-    public void deleteRecommendation(String id) {
-        log.info("Find by id: {}", id);
-        Recommendation rec = repo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Not found Tutorial with id = " + id));
-        rec.getInstruments().clear();
-        log.info("Save by id: {}", id);
-        repo.save(rec);
-        log.info("Delete by id: {}", id);
-        repo.deleteById(id);
+    public void deleteRecommendation(String recommendationId) {
+        log.debug("Find by id: {}", recommendationId);
+        repo.findById(recommendationId).orElseThrow(() -> new ResourceNotFoundException("Not found Recommendation with id = " + recommendationId));
+        log.debug("Delete by id: {}", recommendationId);
+        repo.deleteById(recommendationId);
+    }
+
+    public Recommendation getRecommendationById(String recommendationId) {
+        log.debug("Find by id: {}", recommendationId);
+        return repo.findById(recommendationId).orElseThrow(() -> new ResourceNotFoundException("Not found Recommendation with id = " + recommendationId));
     }
 
 }

@@ -1,6 +1,7 @@
 package com.balanz.recommendations.model;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -36,7 +37,7 @@ public class Recommendation {
     private Date update;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idRecommendation", fetch = FetchType.EAGER, orphanRemoval = true)
     @LazyCollection(LazyCollectionOption.FALSE)
-    private Set<RecommendationInstrument> instruments;
+    private List<RecommendationInstrument> instruments;
     /*@OneToMany(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "idRecomendacion")
     @LazyCollection(LazyCollectionOption.FALSE)

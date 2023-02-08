@@ -28,13 +28,13 @@ public class ApiError {
         timestamp = LocalDateTime.now();
     }
 
-    ApiError(HttpStatus status, Exception ex) {
+    public ApiError(HttpStatus status, Exception ex) {
         this();
         this.status = status;
         this.message = ex.getLocalizedMessage();
     }
     
-    ApiError(HttpStatus status, String message) {
+    public ApiError(HttpStatus status, String message) {
         this();
         this.status = status;
         this.message = message;

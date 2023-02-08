@@ -25,11 +25,11 @@ public class ApiMapper {
                 .build()).collect(Collectors.toSet());
     }
 
-    public static Set<RecommendationInstrument> mapInstruments(String id, List<RecommendationInstrumentEntry> instrumentIds) {
+    public static List<RecommendationInstrument> mapInstruments(String id, List<RecommendationInstrumentEntry> instrumentIds) {
         return instrumentIds.stream().map(i -> RecommendationInstrument.builder()
                 .withIdRecommendation(id)
                 .withIdentifier(i.getSecurityId())
                 .withOrder(i.getOrdenamiento())
-                .build()).collect(Collectors.toSet());
+                .build()).collect(Collectors.toList());
     }
 }
