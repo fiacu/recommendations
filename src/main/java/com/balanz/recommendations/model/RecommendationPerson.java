@@ -1,4 +1,4 @@
-package com.balanz.recommendations;
+package com.balanz.recommendations.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

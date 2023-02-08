@@ -1,15 +1,14 @@
-package com.balanz.recommendations;
+package com.balanz.recommendations.model;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
+
+import org.springframework.http.HttpStatus;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-
-import org.springframework.http.HttpStatus;
 
 import lombok.Data;
 
@@ -24,7 +23,6 @@ public class ApiError {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT)
     private LocalDateTime timestamp;
     private String message;
-    private List<ApiSubError> subErrors;
  
     private ApiError() {
         timestamp = LocalDateTime.now();

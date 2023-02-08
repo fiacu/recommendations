@@ -1,14 +1,23 @@
-spring.datasource.hikari:
-  connectionTimeout: 20000
-  maximumPoolSize: 5
-  poolName: HikariPoolZZZ
-spring.jpa:
-  show-sql: true
-  properties.hibernate.format_sql: true
-
 server:
   servlet:
     context-path: /bz-recommendation/v1
+
+spring:
+  datasource:
+    hikari:
+      connectionTimeout: 20000
+      maximumPoolSize: 5
+      poolName: HikariPoolZZZ
+    url: jdbc:h2:mem:mydb
+    username: sa
+    password: pass
+    driverClassName: org.h2.Driver
+  jpa:
+    show-sql: true
+    properties.hibernate.format_sql: true
+    database-platform: org.hibernate.dialect.H2Dialect
+  h2:
+    console.enabled: true
 
 springdoc.swagger-ui.disable-swagger-default-url: true
 

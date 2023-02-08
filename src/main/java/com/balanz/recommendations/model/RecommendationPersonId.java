@@ -1,15 +1,15 @@
-package com.balanz.recommendations;
+package com.balanz.recommendations.model;
 
 import java.io.Serializable;
 
 import lombok.Data;
 
 @Data
-public class RecomendacionInstrumentosId implements Serializable {
+public class RecommendationPersonId implements Serializable {
     /**
      * 
      */
     private static final long serialVersionUID = 1L;
     private String idRecommendation;
-    private String identifier;
+    private Long personId;
 }

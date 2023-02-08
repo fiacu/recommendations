@@ -1,4 +1,4 @@
-package com.balanz.recommendations;
+package com.balanz.recommendations.controller;
 
 import java.util.HashMap;
 import java.util.List;
@@ -16,6 +16,11 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.balanz.recommendations.model.ApiMapper;
+import com.balanz.recommendations.model.Recommendation;
+import com.balanz.recommendations.model.RecommendationEntry;
+import com.balanz.recommendations.service.RecommendationService;
+
 @RestController
 public class RecommendationController implements RecommendationApi {
     @Autowired
@@ -29,7 +34,7 @@ public class RecommendationController implements RecommendationApi {
 
     @Override
     public ResponseEntity<Void> createRecommendation(@Valid final RecommendationEntry recommendation) {
-        service.createRecommendation(ApiMapper.mapRecomendation(recommendation));
+        service.saveRecommendation(ApiMapper.mapRecomendation(recommendation));
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
@@ -57,9 +62,8 @@ public class RecommendationController implements RecommendationApi {
             @Valid RecommendationEntry recommendation) {
         final Optional<Recommendation> dbRecommendation = service.getRecommendationByName(name);
         if(dbRecommendation.isEmpty())
-            service.createRecommendation(ApiMapper.mapRecomendation(recommendation));
-        else
-            service.updateRecommendation(dbRecommendation.get(), ApiMapper.mapRecomendation(recommendation));
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        service.saveRecommendation(ApiMapper.mapRecomendation(recommendation));
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

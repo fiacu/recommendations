@@ -1,4 +1,4 @@
-package com.balanz.recommendations;
+package com.balanz.recommendations.exception;
 
 public class ResourceNotFoundException extends RuntimeException {
 
