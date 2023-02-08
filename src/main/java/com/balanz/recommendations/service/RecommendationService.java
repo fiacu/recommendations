@@ -1,19 +1,18 @@
 package com.balanz.recommendations.service;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.balanz.recommendations.exception.ResourceNotFoundException;
 import com.balanz.recommendations.model.Recommendation;
+import com.balanz.recommendations.model.RecommendationInstrument;
 import com.balanz.recommendations.repository.RecommendationRepository;
 
 import lombok.extern.slf4j.Slf4j;
@@ -48,20 +47,6 @@ public class RecommendationService {
         return recommendations;
     }
 
-    @Transactional
-    public void updateRecommendation(Recommendation oldRec, Recommendation newRec) {
-        /*log.debug("Delete: {}", oldRec.getName());
-        Query q = em.createNativeQuery("DELETE FROM RecommendationInstrument ri WHERE ri.id = ?");
-        q.setParameter(1, oldRec.getId());
-        q.executeUpdate();
-        */
-        log.debug("Update: {}", oldRec.getName());
-        oldRec.setUpdate(new Date());
-        //oldRec.setInstruments(newRec.getInstruments());
-        //oldRec.setPersons(newRec.getPersons());
-        repo.save(oldRec);
-    }
-
     public void deleteRecommendation(String recommendationId) {
         log.debug("Find by id: {}", recommendationId);
         repo.findById(recommendationId).orElseThrow(() -> new ResourceNotFoundException("Not found Recommendation with id = " + recommendationId));
@@ -72,6 +57,29 @@ public class RecommendationService {
     public Recommendation getRecommendationById(String recommendationId) {
         log.debug("Find by id: {}", recommendationId);
         return repo.findById(recommendationId).orElseThrow(() -> new ResourceNotFoundException("Not found Recommendation with id = " + recommendationId));
+    }
+
+    public void patchRecommendation(String recommendationId, Recommendation mapRecomendation) {
+        log.debug("Find by id: {}", recommendationId);
+        Recommendation actual = this.getRecommendationById(recommendationId);
+        log.debug("Patch id: {}", recommendationId);
+        for(RecommendationInstrument i : mapRecomendation.getInstruments()) {
+            if(notPresent(i, actual.getInstruments()))
+                actual.getInstruments().add(i);
+        }
+        actual.setUpdate(mapRecomendation.getUpdate());
+        repo.save(actual);
+    }
+
+    private boolean notPresent(RecommendationInstrument i, List<RecommendationInstrument> instruments) {
+        return instruments.stream().filter(ri -> ri.getIdentifier().equalsIgnoreCase(i.getIdentifier())).findAny().isEmpty();
+    }
+
+    public void updateRecommendation(String recommendationId, Recommendation mapRecomendation) {
+        log.debug("Find by id: {}", recommendationId);
+        this.getRecommendationById(recommendationId);
+        log.debug("Update id: {}", recommendationId);
+        this.saveRecommendation(mapRecomendation);
     }
 
 }

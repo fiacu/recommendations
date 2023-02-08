@@ -7,6 +7,7 @@ import javax.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -51,7 +52,7 @@ public interface RecommendationApi {
     ResponseEntity<List<Recommendation>> findRecommendation(@RequestParam(required = false) final String name);
     
     @PostMapping(value = "/", consumes = { "application/json" })
-    @Operation(summary = "Create a recommendation", tags = { "Recommendation" })
+    @Operation(summary = "Create recommendation", tags = { "Recommendation" })
     @ApiResponses(value = { 
             @ApiResponse(
                 responseCode = "201", 
@@ -66,7 +67,7 @@ public interface RecommendationApi {
     ResponseEntity<Void> createRecommendation(@Valid @RequestBody final RecommendationEntry recommendation);
 
     @GetMapping(value = "/{recommendationId}", produces = { "application/json" })
-    @Operation(summary = "Get a recommendation by name", tags = { "Recommendation" })
+    @Operation(summary = "Get recommendation", tags = { "Recommendation" })
     @ApiResponses(value = {
             @ApiResponse(
                 responseCode = "200", 
@@ -88,12 +89,11 @@ public interface RecommendationApi {
     ResponseEntity<Recommendation> getRecommendation(@PathVariable final String recommendationId);
 
     @PutMapping(value = "/{recommendationId}", consumes = { "application/json" })
-    @Operation(summary = "Update a recommendation by name", tags = { "Recommendation" })
+    @Operation(summary = "Complete update recommendation", tags = { "Recommendation" })
     @ApiResponses(value = {
             @ApiResponse(
                 responseCode = "200", 
-                description = "Ok", 
-                content = @Content(mediaType = "application/json", schema = @Schema(implementation = Recommendation.class))
+                description = "Ok"
             ),
             @ApiResponse(
                 responseCode = "400",
@@ -109,8 +109,29 @@ public interface RecommendationApi {
         })
     ResponseEntity<Void> updateRecommendation(@PathVariable final String recommendationId, @Valid @RequestBody final RecommendationEntry recommendation);
 
+    @PatchMapping(value = "/{recommendationId}", consumes = { "application/json" })
+    @Operation(summary = "Partial update recommendation", tags = { "Recommendation" })
+    @ApiResponses(value = {
+            @ApiResponse(
+                responseCode = "200", 
+                description = "Ok"
+            ),
+            @ApiResponse(
+                responseCode = "400",
+                description = "Bad request", 
+                content = @Content(mediaType = "application/json", schema = @Schema(implementation = ApiError.class))
+            ),
+            @ApiResponse(
+                responseCode = "404",
+                description = "Recommendation not found", 
+                content = @Content(mediaType = "application/json", schema = @Schema(implementation = ApiError.class))
+            ),
+            
+        })
+    ResponseEntity<Void> patchRecommendation(@PathVariable final String recommendationId, @Valid @RequestBody final RecommendationEntry recommendation);
+
     @DeleteMapping(value = "/{recommendationId}", produces = {"application/json" })
-    @Operation(summary = "Delete a recommendation", tags = { "Recommendation" })
+    @Operation(summary = "Delete recommendation", tags = { "Recommendation" })
     @ApiResponses(value = {
             @ApiResponse(
                 responseCode = "204", 
@@ -125,7 +146,7 @@ public interface RecommendationApi {
     ResponseEntity<Void> deleteRecommendation(@PathVariable final String recommendationId);
 
     @GetMapping(value = "/name/{name}", produces = { "application/json" })
-    @Operation(summary = "Get a recommendation by name", tags = { "Recommendation" })
+    @Operation(summary = "Get recommendation by name", tags = { "Recommendation" })
     @ApiResponses(value = {
             @ApiResponse(
                 responseCode = "200", 
@@ -147,7 +168,7 @@ public interface RecommendationApi {
     ResponseEntity<Recommendation> getRecommendationByName(@PathVariable final String name);
 
     @PutMapping(value = "/name/{name}", consumes = { "application/json" })
-    @Operation(summary = "Update a recommendation by name", tags = { "Recommendation" })
+    @Operation(summary = "Update recommendation by name", tags = { "Recommendation" })
     @ApiResponses(value = {
             @ApiResponse(
                 responseCode = "200", 

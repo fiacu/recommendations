@@ -59,7 +59,7 @@ public class ExceptionHandlerAdvice {
 
     @ExceptionHandler(ResourceNotFoundException.class)
     protected ResponseEntity<ApiError> handleMarketDataException(final ResourceNotFoundException ex) {
-        return buildResponseEntity(new ApiError(HttpStatus.BAD_REQUEST, ex.getMessage()));
+        return buildResponseEntity(new ApiError(HttpStatus.NOT_FOUND, ex.getMessage()));
     }
     
     // Handle default, ninguna excepcion que sea tirada a mano deberia caer aca.

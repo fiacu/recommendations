@@ -46,8 +46,14 @@ public class RecommendationController implements RecommendationApi {
     @Override
     public ResponseEntity<Void> updateRecommendation(String recommendationId,
             @Valid RecommendationEntry recommendation) {
-        service.getRecommendationById(recommendationId);
-        service.saveRecommendation(ApiMapper.mapRecomendation(recommendation));
+        service.updateRecommendation(recommendationId, ApiMapper.mapRecomendation(recommendation));
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+    
+    @Override
+    public ResponseEntity<Void> patchRecommendation(String recommendationId,
+            @Valid RecommendationEntry recommendation) {
+        service.patchRecommendation(recommendationId, ApiMapper.mapRecomendation(recommendation));
         return new ResponseEntity<>(HttpStatus.OK);
     }
     
