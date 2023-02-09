@@ -13,7 +13,7 @@ public class ApiMapper {
         .withName(recommendation.getName())
         .withUpdate(new Date())
         .withInstruments(mapInstruments(recommendation.getId(), recommendation.getInstrumentIds()))
-        //.withPersons(mapPersons(recommendation.getId(), recommendation.getPersonsIds()))
+        .withPersons(mapPersons(recommendation.getId(), recommendation.getPersonsIds()))
         .build();
     }
 

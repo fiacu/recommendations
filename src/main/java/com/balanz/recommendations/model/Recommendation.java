@@ -9,7 +9,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -38,8 +37,7 @@ public class Recommendation {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idRecommendation", fetch = FetchType.EAGER, orphanRemoval = true)
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<RecommendationInstrument> instruments;
-    /*@OneToMany(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "idRecomendacion")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idRecommendation", fetch = FetchType.EAGER, orphanRemoval = true)
     @LazyCollection(LazyCollectionOption.FALSE)
-    private Set<RecommendationPerson> persons;*/
+    private Set<RecommendationPerson> persons;
 }

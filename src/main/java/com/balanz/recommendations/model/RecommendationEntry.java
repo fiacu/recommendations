@@ -13,6 +13,7 @@ import lombok.Data;
 @Builder(setterPrefix = "with")
 public class RecommendationEntry implements Serializable {
     private static final long serialVersionUID = 1L;
+    //UUID
     @NotBlank(message = "Id is mandatory")
     private String id;
     @NotBlank(message = "Name is mandatory")

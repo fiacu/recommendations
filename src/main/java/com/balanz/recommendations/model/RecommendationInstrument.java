@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Entity
 @Table(name = "RecomendacionesInstrumentos")
-@IdClass(RecomendacionInstrumentosId.class)
+@IdClass(RecommendationInstrumentsId.class)
 public class RecommendationInstrument {
     @Id
     @Column(name = "idRecomendacion")

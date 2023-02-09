@@ -1,4 +1,19 @@
-# Hacer un get de todas las recomendaciones #
+# Recomendaciones #
+
+
+
+1. Revisar validaciones de :
+
+  log.info("-----------No Tiene habilitado el Tipo De watchList -------------------- ");
+  log.info("-----------No Tiene Elementos el paylaod para cargar instrumentos -------------------- ");
+  log.info("-----------El payload Tiene Ordernamientos Duplicados-------------------- ");
+  log.info("-----------El payload Tiene SecurityIds Duplicados-------------------- ");
+  log.info("-----------El payload Tiene SecurityIds Inexistentes-------------------- ");
+  log.info("-----------El payload Tiene Personas Invalidas o Inexistentes-------------------- ");
+
+
+2. Por ahora las recomnedaciones pueden ser acumulativas por el uuid, lo que presento al front con MD es otra historia.
+Puedo mantener siempre 1 sola por el nombre o acumular y luego purgar.
 
 
 ## Recomendaciones actuales: ##

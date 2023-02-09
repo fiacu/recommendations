@@ -5,7 +5,7 @@ import java.io.Serializable;
 import lombok.Data;
 
 @Data
-public class RecomendacionInstrumentosId implements Serializable {
+public class RecommendationInstrumentsId implements Serializable {
     /**
      * 
      */

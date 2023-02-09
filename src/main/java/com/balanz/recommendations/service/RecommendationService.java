@@ -3,6 +3,7 @@ package com.balanz.recommendations.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import com.balanz.recommendations.exception.ResourceNotFoundException;
 import com.balanz.recommendations.model.Recommendation;
 import com.balanz.recommendations.model.RecommendationInstrument;
+import com.balanz.recommendations.model.RecommendationPerson;
 import com.balanz.recommendations.repository.RecommendationRepository;
 
 import lombok.extern.slf4j.Slf4j;
@@ -20,8 +22,6 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @Slf4j
 public class RecommendationService {
-    @PersistenceContext
-    private EntityManager em;
     @Autowired
     private RecommendationRepository repo;
 
@@ -67,8 +67,16 @@ public class RecommendationService {
             if(notPresent(i, actual.getInstruments()))
                 actual.getInstruments().add(i);
         }
+        for(RecommendationPerson p : mapRecomendation.getPersons()) {
+            if(notPresent(p, actual.getPersons()))
+                actual.getPersons().add(p);
+        }
         actual.setUpdate(mapRecomendation.getUpdate());
         repo.save(actual);
+    }
+
+    private boolean notPresent(RecommendationPerson p, Set<RecommendationPerson> persons) {
+        return persons.stream().filter(rp -> rp.getPersonId().longValue() == p.getPersonId().longValue()).findAny().isEmpty();
     }
 
     private boolean notPresent(RecommendationInstrument i, List<RecommendationInstrument> instruments) {
